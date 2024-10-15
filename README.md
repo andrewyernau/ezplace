@@ -10,30 +10,9 @@ This project is the official web page for **EzPlace**, where you can find resour
 - Built with React.js for dynamic and responsive UI.
 - Designed to showcase mods, plugins, and other resources related to the EzPlace server.
 
-## Installation
-
-To run this project locally:
-
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/your-repo/ezplace-web.git
-    ```
-2. Navigate to the project folder:
-    ```bash
-    cd ezplace-web
-    ```
-3. Install dependencies:
-    ```bash
-    npm install
-    ```
-4. Start the development server:
-    ```bash
-    npm start
-    ```
-
 ## First Commit
 
-The initial design concept was generated with the help of [Bolt AI ⚡️](https://bolt.new), which provided an image prototype for the first iteration of the project.
+The initial design concept was generated with the help of [Bolt AI](https://bolt.new), which provided an image prototype for the first iteration of the project.
 
 ---
 
