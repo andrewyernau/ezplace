@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import NewsCard from "./components/NewsCard";
 import ShopMenu from "./components/ShopMenu";
 import DonationMenu from "./components/DonationMenu";
-import EmptyBox from "./components/EmptyBox";
 
 const App: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
