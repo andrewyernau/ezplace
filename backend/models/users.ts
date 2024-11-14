@@ -1,6 +1,6 @@
 import db from "../db.ts";
 
-interface UserSchema {
+export interface UserSchema {
   _id: { $oid: string };
   username: string;
   email: string;
