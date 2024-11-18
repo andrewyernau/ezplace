@@ -20,10 +20,10 @@ const BodyContent: React.FC = () => {
       <CardContent>
         <About />
         <ServerLink />
-        
+
         <Hero />
         <Sponsors />
-        
+
         <HowItWorks />
         <Features />
         <Services />

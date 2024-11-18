@@ -7,7 +7,11 @@ export const ServerLink = () => {
     <section id="serverlink" className="container py-24 sm:py-32">
       <div
         className="relative bg-muted/50 border rounded-lg py-12 overflow-hidden"
-        style={{ backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center" }}
+        style={{
+          backgroundImage: `url(${background})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       >
         {/* Overlay for Blur */}
         <div className="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
@@ -27,7 +31,8 @@ export const ServerLink = () => {
                 </span>
               </h2>
               <p className="text-xl text-muted-foreground mt-4">
-                Join and start to play on our Minecraft server! You can enter with this IP:{" "}
+                Join and start to play on our Minecraft server! You can enter
+                with this IP:{" "}
                 <span className="text-primary">play.ezplace.net</span>
               </p>
             </div>

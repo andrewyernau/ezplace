@@ -3,10 +3,7 @@ import pilot from "../assets/pilot.png";
 
 export const About = () => {
   return (
-    <section
-      id="about"
-      className="container py-24 sm:py-32"
-    >
+    <section id="about" className="container py-24 sm:py-32">
       <div className="bg-muted/50 border rounded-lg py-12">
         <div className="px-6 flex flex-col-reverse md:flex-row gap-8 md:gap-12">
           <img
@@ -20,12 +17,15 @@ export const About = () => {
                 <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
                   Ezplace Network{" "}
                 </span>
-                
               </h2>
               <p className="text-xl text-muted-foreground mt-4">
-                What is Ezplace Network? Ezplace Network is not only a platform for connecting people, but also an experience. We are a team of professionals who are passionate about what we do and give our best to make your experience with us unforgettable.
-                
-                Join to discover an unique RPG experience, where you can create your own character, make friends, and explore the world of Ezplace Network. We are here to make your dreams come true.{" "}
+                What is Ezplace Network? Ezplace Network is not only a platform
+                for connecting people, but also an experience. We are a team of
+                professionals who are passionate about what we do and give our
+                best to make your experience with us unforgettable. Join to
+                discover an unique RPG experience, where you can create your own
+                character, make friends, and explore the world of Ezplace
+                Network. We are here to make your dreams come true.{" "}
               </p>
             </div>
 
