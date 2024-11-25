@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 
-export const Cta = () => {
+export const Store = () => {
   return (
     <section id="cta" className="bg-muted/50 py-16 my-24 sm:my-32">
       <div className="container lg:grid lg:grid-cols-2 place-items-center">

@@ -11,23 +11,45 @@ export const Username = ({ onClose }: { onClose: () => void }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/mojang-api/users/profiles/minecraft/${username}`);
-      if (response.ok) {
-        const data = await response.json();
-        setSkin(`https://crafatar.com/avatars/${data.id}`);
-        setIsLoggedIn(true);
-        setError(null);
+      // Verificar existencia del usuario en Mojang API
+      const mojangResponse = await fetch(
+        `http://localhost:8000/mojang-api/users/profiles/minecraft/${username}`
+      );
 
-        // Mostrar un mensaje de bienvenida
-        setTimeout(() => {
-          onClose(); // Cerrar la ventana después de 1 segundo
-        }, 5000);
-      } else {
-        const errorData = await response.json();
-        setError(errorData.error || "Error al iniciar sesión");
+      if (!mojangResponse.ok) {
+        const errorData = await mojangResponse.json();
+        setError(errorData.error || "Invalid Minecraft username.");
+        return;
       }
+
+      const mojangData = await mojangResponse.json();
+      setSkin(`https://crafatar.com/avatars/${mojangData.id}`);
+      setError(null);
+
+      // Realizar fast-login en el servidor
+      const fastLoginResponse = await fetch("http://localhost:8000/api/fast-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username }),
+        credentials: "include", // Para manejar cookies en solicitudes CORS
+      }); 
+
+      if (!fastLoginResponse.ok) {
+        const loginError = await fastLoginResponse.json();
+        setError(loginError.message || "Error during fast login.");
+        return;
+      }
+
+      // Login exitoso
+      setIsLoggedIn(true);
+      setError(null);
+
+      // Cerrar el modal después de un tiempo
+      setTimeout(() => {
+        onClose();
+      }, 5000);
     } catch (err) {
-      setError("Ocurrió un error al conectar con el servidor");
+      setError("An error occurred while connecting to the server.");
     }
   };
 
@@ -64,9 +86,15 @@ export const Username = ({ onClose }: { onClose: () => void }) => {
               </div>
             </div>
             {isLoggedIn && (
-              <div className="mt-4 text-center">
-                <p className="text-green-500">Welcome, {username}!</p>
-                {skin && <img src={skin} alt="User skin" className="w-16 h-16 rounded-full" />}
+              <div className="mt-4 flex items-center gap-4">
+                {skin && (
+                  <img
+                    src={skin}
+                    alt="User skin"
+                    className="w-16 h-16 rounded-full border border-primary shadow-md"
+                  />
+                )}
+                <p className="text-green-500 text-lg">Welcome, {username}!</p>
               </div>
             )}
           </div>

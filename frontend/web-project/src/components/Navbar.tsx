@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -29,8 +29,35 @@ interface RouteProps {
 }
 
 export const Navbar = ({ onLoginToggle }: { onLoginToggle: () => void }) => {
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [username, setUsername] = useState<string | null>(null);
+
+  // Fetch session on load
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/session", {
+          credentials: "include",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setUsername(data.username);
+        }
+      } catch {
+        setUsername(null);
+      }
+    };
+
+    checkSession();
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch("http://localhost:8000/api/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+    setUsername(null);
+  };
 
   const routeList: RouteProps[] = [
     {
@@ -45,25 +72,6 @@ export const Navbar = ({ onLoginToggle }: { onLoginToggle: () => void }) => {
       href: "#pricing",
       label: "Shop",
     },
-    {
-      label: (
-        <DropdownMenu>
-          <div className="flex items-center gap-2">
-            <DropdownMenuTrigger asChild>
-              <span>Log in</span>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={onLoginToggle}>
-                Fast Login with username
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Login with email.
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </div>
-        </DropdownMenu>
-      ),
-    },
   ];
 
   return (
@@ -77,7 +85,6 @@ export const Navbar = ({ onLoginToggle }: { onLoginToggle: () => void }) => {
               href="/"
               className="ml-2 font-bold text-xl flex"
             >
-              
               Ezplace Network
             </a>
           </NavigationMenuItem>
@@ -146,17 +153,38 @@ export const Navbar = ({ onLoginToggle }: { onLoginToggle: () => void }) => {
             ))}
           </nav>
 
-          <div className="hidden md:flex gap-2">
-            <a
-              rel="noreferrer noopener"
-              href="https://github.com/andrewyernau"
-              target="_blank"
-              className={`border ${buttonVariants({ variant: "secondary" })}`}
-            >
-              <GitHubLogoIcon className="mr-2 w-5 h-5" />
-              Github
-            </a>
-
+          <div className="flex items-center gap-2">
+            {username ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="flex items-center gap-2 cursor-pointer">
+                    <img
+                      src={`https://crafatar.com/avatars/${username}`}
+                      alt="User Avatar"
+                      className="w-8 h-8 rounded-full"
+                    />
+                    <span>{username}</span>
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={handleLogout}>
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <span>Log in</span>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={onLoginToggle}>
+                    Fast Login with username
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>Login with email</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
             <ModeToggle />
           </div>
         </NavigationMenuList>
@@ -164,6 +192,3 @@ export const Navbar = ({ onLoginToggle }: { onLoginToggle: () => void }) => {
     </header>
   );
 };
-
-
-

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Card, CardContent } from "./ui/card";
 import { About } from "./About";
 import { ServerLink } from "./ServerLink";
-import { Cta } from "./Cta";
+import { Store } from "./Store";
 import { Pricing } from "./Pricing";
 import { Services } from "./Services";
 import { Sponsors } from "./Sponsors";
@@ -15,7 +15,7 @@ const BodyContent: React.FC = () => {
         <ServerLink />
         <Services />
         <Pricing />
-        <Cta />
+        <Store />
         <Sponsors />
       </CardContent>
     </Card>

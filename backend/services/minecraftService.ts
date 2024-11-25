@@ -7,7 +7,7 @@ export async function getServerStatus(host: string) {
         online: data.online,                  
         playersOnline: data.players?.online || 0,  
         maxPlayers: data.players?.max || 0,   
-        version: data.version || "unknown",   
+        version: data.protocol_name || "unknown",   
       };
     } catch (error) {
       return {
