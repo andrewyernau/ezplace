@@ -13,7 +13,7 @@ export const Footer = () => {
             className="font-bold text-xl flex"
           >
             <LogoIcon />
-            ShadcnUI/React
+            Ezplace Network
           </a>
         </div>
 
@@ -152,14 +152,14 @@ export const Footer = () => {
 
       <section className="container pb-14 text-center">
         <h3>
-          &copy; 2024 Landing page made by{" "}
+          &copy; 2024 Ezplace website made by{" "}
           <a
             rel="noreferrer noopener"
             target="_blank"
-            href="https://www.linkedin.com/in/leopoldo-miranda/"
+            href="https://github.com/andrewyernau"
             className="text-primary transition-all border-primary hover:border-b-2"
           >
-            Leo Miranda
+            Andrew Yernau
           </a>
         </h3>
       </section>

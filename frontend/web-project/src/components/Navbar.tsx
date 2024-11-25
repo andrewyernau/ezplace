@@ -14,57 +14,75 @@ import {
 
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { buttonVariants } from "./ui/button";
-import { Menu, KeyRound } from "lucide-react";
+import { Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import { LogoIcon } from "./Icons";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 interface RouteProps {
-  href: string;
+  href?: string;
   label: React.ReactNode;
 }
 
-const routeList: RouteProps[] = [
-  {
-    href: "#features",
-    label: "Features",
-  },
-  {
-    href: "#testimonials",
-    label: "Server",
-  },
-  {
-    href: "#pricing",
-    label: "Shop",
-  },
-  {
-    href: "#faq",
-    label: (
-      <div className="flex items-center gap-2">
-        <KeyRound size={18} />
-        Log in
-      </div>
-    ),
-  },
-];
+export const Navbar = ({ onLoginToggle }: { onLoginToggle: () => void }) => {
 
-export const Navbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const routeList: RouteProps[] = [
+    {
+      href: "#about",
+      label: "About this server",
+    },
+    {
+      href: "#serverlink",
+      label: "Server Link",
+    },
+    {
+      href: "#pricing",
+      label: "Shop",
+    },
+    {
+      label: (
+        <DropdownMenu>
+          <div className="flex items-center gap-2">
+            <DropdownMenuTrigger asChild>
+              <span>Log in</span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={onLoginToggle}>
+                Fast Login with username
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                Login with email.
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </div>
+        </DropdownMenu>
+      ),
+    },
+  ];
+
   return (
     <header className="sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
       <NavigationMenu className="mx-auto">
-        <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between ">
+        <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between">
+          {/* Logo */}
           <NavigationMenuItem className="font-bold flex">
             <a
               rel="noreferrer noopener"
               href="/"
               className="ml-2 font-bold text-xl flex"
             >
-              <LogoIcon />
+              
               Ezplace Network
             </a>
           </NavigationMenuItem>
 
-          {/* mobile */}
+          {/* Mobile menu */}
           <span className="flex md:hidden">
             <ModeToggle />
 
@@ -88,7 +106,7 @@ export const Navbar = () => {
                   {routeList.map(({ href, label }, index) => (
                     <a
                       rel="noreferrer noopener"
-                      key={index} // Cambiar a usar índice
+                      key={index}
                       href={href}
                       onClick={() => setIsOpen(false)}
                       className={buttonVariants({ variant: "ghost" })}
@@ -98,7 +116,7 @@ export const Navbar = () => {
                   ))}
                   <a
                     rel="noreferrer noopener"
-                    href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+                    href="https://github.com/andrewyernau"
                     target="_blank"
                     className={`w-[110px] border ${buttonVariants({
                       variant: "secondary",
@@ -112,7 +130,7 @@ export const Navbar = () => {
             </Sheet>
           </span>
 
-          {/* desktop */}
+          {/* Desktop menu */}
           <nav className="hidden md:flex gap-2">
             {routeList.map((route: RouteProps, i) => (
               <a
@@ -131,7 +149,7 @@ export const Navbar = () => {
           <div className="hidden md:flex gap-2">
             <a
               rel="noreferrer noopener"
-              href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+              href="https://github.com/andrewyernau"
               target="_blank"
               className={`border ${buttonVariants({ variant: "secondary" })}`}
             >
@@ -146,3 +164,6 @@ export const Navbar = () => {
     </header>
   );
 };
+
+
+

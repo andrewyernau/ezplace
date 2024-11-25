@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Check } from "lucide-react";
+import girl from "../assets/formato_vertical_girl_pose.png";
 
 enum PopularPlanType {
   NO = 0,
@@ -26,48 +27,93 @@ interface PricingProps {
 
 const pricingList: PricingProps[] = [
   {
-    title: "Free",
+    title: "WARRIOR",
     popular: 0,
-    price: 0,
+    price: 2.5,
     description:
-      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Get Started",
+      "A rank for those who want to stand out as brave fighters of the realm.",
+    buttonText: "Become a Warrior",
     benefitList: [
-      "1 Team member",
-      "2 GB Storage",
-      "Upto 4 pages",
-      "Community support",
-      "lorem ipsum dolor",
+      "Exclusive chat tag [WARRIOR]",
+      "Access to a custom armor emblem",
+      "Ability to use color in chat",
+      "Access to the VIP Discord channel",
+      "Participation in special giveaways",
     ],
   },
   {
-    title: "Premium",
+    title: "SORCERER",
+    popular: 0,
+    price: 3.0,
+    description:
+      "Perfect for those who want a magical touch to their experience.",
+    buttonText: "Become a Sorcerer",
+    benefitList: [
+      "Exclusive chat tag [SORCERER]",
+      "Access to magical particles when walking",
+      "Pet customization commands (change names and colors)",
+      "Thematic cosmetics: wizard hats, special cloaks",
+      "Priority access to thematic events",
+    ],
+  },
+  {
+    title: "FORGEMASTER",
+    popular: 0,
+    price: 3.5,
+    description:
+      "A rank for the masters of crafting and design in the RPG world.",
+    buttonText: "Become a Forgemaster",
+    benefitList: [
+      "Exclusive chat tag [FORGEMASTER]",
+      "Access to custom tool skins",
+      "Permission to use a design workbench (cosmetic only)",
+      "Access to exclusive decorations for plots (banners and ornaments)",
+      "Private Discord channel to share designs",
+    ],
+  },
+  {
+    title: "WANDERER",
+    popular: 0,
+    price: 1.5,
+    description:
+      "For adventurers who want to leave a special mark on the world.",
+    buttonText: "Become a Wanderer",
+    benefitList: [
+      "Exclusive chat tag [WANDERER]",
+      "Access to decorative backpacks",
+      "Visual effects when entering towns (lights, bells)",
+      "Customizable chat title (no gameplay impact)",
+      "Explorer-themed cosmetics",
+    ],
+  },
+  {
+    title: "NOBLE",
     popular: 1,
-    price: 5,
+    price: 15.0,
     description:
-      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Start Free Trial",
+      "A rank for those seeking elegance and recognition in the realm.",
+    buttonText: "Become a Noble",
     benefitList: [
-      "4 Team member",
-      "4 GB Storage",
-      "Upto 6 pages",
-      "Priority support",
-      "lorem ipsum dolor",
+      "Exclusive chat tag [NOBLE]",
+      "Golden cosmetic cape",
+      "Golden particle effects for greeting commands",
+      "Access to luxury decorations for plots",
+      "Special recognition in public server events",
     ],
   },
   {
-    title: "Enterprise",
+    title: "BARD",
     popular: 0,
-    price: 40,
+    price: 10.0,
     description:
-      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Contact US",
+      "For lovers of music and stories, a rank full of style and creativity.",
+    buttonText: "Become a Bard",
     benefitList: [
-      "10 Team member",
-      "8 GB Storage",
-      "Upto 10 pages",
-      "Priority support",
-      "lorem ipsum dolor",
+      "Exclusive chat tag [BARD]",
+      "Access to a musical emote in chat (decorative musical notes)",
+      "Musical particle effects when moving",
+      "Commands to play pre-set melodies with note blocks",
+      "Access to bard-themed attire (hat, cloak, decorative lute)",
     ],
   },
 ];
@@ -76,17 +122,23 @@ export const Pricing = () => {
   return (
     <section id="pricing" className="container py-24 sm:py-32">
       <h2 className="text-3xl md:text-4xl font-bold text-center">
-        Get
+        Get a
         <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
           {" "}
-          Unlimited{" "}
+          Rank{" "}
         </span>
-        Access
+        in our server
       </h2>
       <h3 className="text-xl text-center text-muted-foreground pt-4 pb-8">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
-        reiciendis.
+        You'll be able to show off your badges and enjoy exclusive cosmetics.
       </h3>
+      <div className="flex justify-center items-center mb-8">
+        <img
+          src={girl}
+          className="w-[150px] md:w-[250px] lg:w-[300px] object-contain"
+          alt="Girl pose"
+        />
+      </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {pricingList.map((pricing: PricingProps) => (
           <Card
@@ -107,7 +159,7 @@ export const Pricing = () => {
                 ) : null}
               </CardTitle>
               <div>
-                <span className="text-3xl font-bold">${pricing.price}</span>
+                <span className="text-3xl font-bold">{pricing.price}€</span>
                 <span className="text-muted-foreground"> /month</span>
               </div>
 
