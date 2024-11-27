@@ -1,19 +1,27 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "./SessionContext";
 
 export const Username = ({ onClose }: { onClose: () => void }) => {
-  const [username, setUsername] = useState("");
+  const [inputValue, setInputValue] = useState(""); // Para almacenar el valor del input
   const [error, setError] = useState<string | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [skin, setSkin] = useState<string | null>(null);
+  const { session, setSession } = useSession(); // Obtención del contexto de sesión
+
+  // Este useEffect asegura que el componente se actualice cuando session cambie.
+  useEffect(() => {
+    if (session && session.username) {
+      // Si la sesión tiene un usuario, cargamos el avatar
+      setSkin(`https://crafatar.com/avatars/${session.id}`);
+    }
+  }, [session]); // Dependemos de session para actualizar el avatar
 
   const handleLogin = async () => {
     try {
-      // Verificar existencia del usuario en Mojang API
       const mojangResponse = await fetch(
-        `http://localhost:8000/mojang-api/users/profiles/minecraft/${username}`
+        `http://localhost:8000/mojang-api/users/profiles/minecraft/${inputValue}`
       );
 
       if (!mojangResponse.ok) {
@@ -26,13 +34,12 @@ export const Username = ({ onClose }: { onClose: () => void }) => {
       setSkin(`https://crafatar.com/avatars/${mojangData.id}`);
       setError(null);
 
-      // Realizar fast-login en el servidor
       const fastLoginResponse = await fetch("http://localhost:8000/api/fast-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username }),
-        credentials: "include", // Para manejar cookies en solicitudes CORS
-      }); 
+        body: JSON.stringify({ username: inputValue, id: mojangData.id }),
+        credentials: "include",
+      });
 
       if (!fastLoginResponse.ok) {
         const loginError = await fastLoginResponse.json();
@@ -40,16 +47,22 @@ export const Username = ({ onClose }: { onClose: () => void }) => {
         return;
       }
 
-      // Login exitoso
-      setIsLoggedIn(true);
-      setError(null);
+      // Actualiza el contexto de sesión
+      setSession({ username: inputValue, id: mojangData.id });
 
-      // Cerrar el modal después de un tiempo
+      // Cerrar la ventana después de 5 segundos
       setTimeout(() => {
         onClose();
       }, 5000);
     } catch (err) {
       setError("An error occurred while connecting to the server.");
+    }
+  };
+
+  // Manejar el evento de "Enter" para iniciar sesión
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleLogin(); // Ejecutar la función de login cuando se presiona Enter
     }
   };
 
@@ -75,17 +88,23 @@ export const Username = ({ onClose }: { onClose: () => void }) => {
                 <p>Log in just with your username!</p>
                 <span className="text-primary">
                   <Input
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={handleKeyDown} // Detectar la tecla "Enter"
                     placeholder="Enter Minecraft Username"
                   />
                 </span>
                 <br />
-                <Button onClick={handleLogin}>Login</Button>
+                {/* Solo mostrar el botón de login si no está logueado */}
+                {!session || !session.username ? (
+                  <Button onClick={handleLogin}>Login</Button>
+                ) : null}
                 {error && <p className="text-red-500 mt-2">{error}</p>}
               </div>
             </div>
-            {isLoggedIn && (
+
+            {/* Mostrar mensaje de bienvenida y avatar solo cuando el usuario esté logueado */}
+            {session && session.username && (
               <div className="mt-4 flex items-center gap-4">
                 {skin && (
                   <img
@@ -94,7 +113,7 @@ export const Username = ({ onClose }: { onClose: () => void }) => {
                     className="w-16 h-16 rounded-full border border-primary shadow-md"
                   />
                 )}
-                <p className="text-green-500 text-lg">Welcome, {username}!</p>
+                <p className="text-green-500 text-lg">Welcome, {session.username}!</p>
               </div>
             )}
           </div>

@@ -21,6 +21,7 @@
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
     "lib-utils-ts": "^0.0.0-test",
     "lucide-react": "^0.460.0",
     "postcss": "^8.4.49",

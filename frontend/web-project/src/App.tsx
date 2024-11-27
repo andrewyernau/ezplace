@@ -5,7 +5,6 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import BodyContent from "./components/BodyContent";
 import "./App.css";
 import { useState } from "react";
-
 function App() {
   const [isUsernameVisible, setIsUsernameVisible] = useState(false);
 

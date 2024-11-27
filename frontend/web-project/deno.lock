@@ -18,6 +18,7 @@
     "npm:autoprefixer@^10.4.20": "10.4.20_postcss@8.4.49",
     "npm:class-variance-authority@0.7": "0.7.0",
     "npm:clsx@^2.1.1": "2.1.1",
+    "npm:cors@^2.8.5": "2.8.5",
     "npm:eslint-plugin-react-hooks@5": "5.0.0_eslint@9.15.0",
     "npm:eslint-plugin-react-refresh@~0.4.14": "0.4.14_eslint@9.15.0",
     "npm:eslint@^9.13.0": "9.15.0",
@@ -1680,6 +1681,13 @@
     "core-js@1.2.7": {
       "integrity": "sha512-ZiPp9pZlgxpWRu0M+YWbm6+aQ84XEfH1JRXvfOc/fILWI0VKhLC2LX13X1NYq4fULzLMq7Hfh43CSo2/aIaUPA=="
     },
+    "cors@2.8.5": {
+      "integrity": "sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==",
+      "dependencies": [
+        "object-assign",
+        "vary"
+      ]
+    },
     "create-react-class@15.7.0": {
       "integrity": "sha512-QZv4sFWG9S5RUvkTYWbflxeZX+JG7Cz0Tn33rQBJ+WFQTqTfUTjMjiv9tnfXazjsO5r0KhPs+AqCjyrQX6h2ng==",
       "dependencies": [
@@ -3141,6 +3149,9 @@
         "word-wrap"
       ]
     },
+    "vary@1.1.2": {
+      "integrity": "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg=="
+    },
     "vite-tsconfig-paths@5.1.2_vite@5.4.11_typescript@5.6.3_@types+node@22.9.0": {
       "integrity": "sha512-gEIbKfJzSEv0yR3XS2QEocKetONoWkbROj6hGx0FHM18qKUojhvcokQsxQx5nMkelZq2n37zbSGCJn+FSODSjA==",
       "dependencies": [
@@ -3233,6 +3244,7 @@
         "npm:autoprefixer@^10.4.20",
         "npm:class-variance-authority@0.7",
         "npm:clsx@^2.1.1",
+        "npm:cors@^2.8.5",
         "npm:eslint-plugin-react-hooks@5",
         "npm:eslint-plugin-react-refresh@~0.4.14",
         "npm:eslint@^9.13.0",

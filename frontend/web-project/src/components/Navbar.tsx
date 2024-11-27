@@ -22,6 +22,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useSession } from "./SessionContext";
 
 interface RouteProps {
   href?: string;
@@ -30,9 +31,8 @@ interface RouteProps {
 
 export const Navbar = ({ onLoginToggle }: { onLoginToggle: () => void }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [username, setUsername] = useState<string | null>(null);
+  const { session, setSession } = useSession();
 
-  // Fetch session on load
   useEffect(() => {
     const checkSession = async () => {
       try {
@@ -41,22 +41,37 @@ export const Navbar = ({ onLoginToggle }: { onLoginToggle: () => void }) => {
         });
         if (response.ok) {
           const data = await response.json();
-          setUsername(data.username);
+          setSession(data); // Actualiza la sesión global
         }
       } catch {
-        setUsername(null);
+        setSession({ username: null, id: null }); // Limpia la sesión en caso de error
       }
     };
 
     checkSession();
-  }, []);
+  }, [setSession]);
 
   const handleLogout = async () => {
-    await fetch("http://localhost:8000/api/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-    setUsername(null);
+    try {
+      const logoutResponse = await fetch("http://localhost:8000/api/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Para asegurarnos de que el cuerpo sea JSON
+        },
+        credentials: "include", // Importante para enviar cookies de sesión al backend
+      });
+
+      if (logoutResponse.ok) {
+        setSession({ username: null, id: null });
+
+        setIsOpen(false); // Cerrar la ventana emergente de login después de 500ms
+        window.location.reload();
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   const routeList: RouteProps[] = [
@@ -154,16 +169,16 @@ export const Navbar = ({ onLoginToggle }: { onLoginToggle: () => void }) => {
           </nav>
 
           <div className="flex items-center gap-2">
-            {username ? (
+            {session.username ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <div className="flex items-center gap-2 cursor-pointer">
                     <img
-                      src={`https://crafatar.com/avatars/${username}`}
+                      src={`https://crafatar.com/avatars/${session.id}`}
                       alt="User Avatar"
                       className="w-8 h-8 rounded-full"
                     />
-                    <span>{username}</span>
+                    <span>{session.username}</span>
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">

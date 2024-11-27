@@ -25,7 +25,9 @@ export async function vseMiddleware(context: Context, next: Function) {
         }
       }
     }
-    context.request.body = () => body; //Rewrites the body with the sanitized and escaped values
+
+    // Guardar el cuerpo procesado en el estado del contexto en lugar de sobrescribir `context.request.body`
+    context.state.sanitizedBody = body;
   }
   await next();
 }
